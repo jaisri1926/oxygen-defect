@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Oxygen Cylinder Defect Detection</title>
+    <style>
+        body { font-family: Arial; background: #f0f8ff; margin: 0; padding: 20px; }
+        h1 { color: #003366; text-align: center; }
+        .btn { padding: 10px 20px; background: #003366; color: white; 
+               text-decoration: none; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: #003366; color: white; padding: 10px; }
+        td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        .defective { color: red; font-weight: bold; }
+        .nodefect { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🏥 Oxygen Cylinder Defect Detection System</h1>
+    <a href="/add" class="btn">+ Add New Cylinder</a>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Cylinder No</th>
+            <th>Pressure</th>
+            <th>Weight</th>
+            <th>Temperature</th>
+            <th>Valve</th>
+            <th>Defect Status</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="cylinder : ${cylinders}">
+            <td th:text="${cylinder.id}"></td>
+            <td th:text="${cylinder.cylinderNo}"></td>
+            <td th:text="${cylinder.pressure}"></td>
+            <td th:text="${cylinder.weight}"></td>
+            <td th:text="${cylinder.temperature}"></td>
+            <td th:text="${cylinder.valveCondition}"></td>
+            <td th:text="${cylinder.defectStatus}"
+                th:class="${cylinder.defectStatus == 'DEFECTIVE'} ? 'defective' : 'nodefect'">
+            </td>
+            <td>
+                <a th:href="@{/view/{id}(id=${cylinder.id})}">View</a> |
+                <a th:href="@{/delete/{id}(id=${cylinder.id})}"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

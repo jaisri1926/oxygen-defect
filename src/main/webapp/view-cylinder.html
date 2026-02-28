@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Cylinder</title>
+    <style>
+        body { font-family: Arial; background: #f0f8ff; margin: 0; padding: 20px; }
+        h1 { color: #003366; text-align: center; }
+        .container { background: white; padding: 30px; 
+                     border-radius: 10px; max-width: 500px; 
+                     margin: 20px auto; box-shadow: 0 0 10px #ccc; }
+        .row { display: flex; justify-content: space-between; 
+               padding: 10px 0; border-bottom: 1px solid #eee; }
+        .label { font-weight: bold; color: #003366; }
+        .defective { color: red; font-weight: bold; font-size: 20px; }
+        .nodefect { color: green; font-weight: bold; font-size: 20px; }
+        .btn { display: block; text-align: center; padding: 10px; 
+               background: #003366; color: white; text-decoration: none; 
+               border-radius: 5px; margin-top: 20px; }
+        .btn:hover { background: #0055aa; }
+    </style>
+</head>
+<body>
+    <h1>🏥 Cylinder Details</h1>
+    <div class="container">
+
+        <div class="row">
+            <span class="label">Cylinder No:</span>
+            <span th:text="${cylinder.cylinderNo}"></span>
+        </div>
+        <div class="row">
+            <span class="label">Pressure:</span>
+            <span th:text="${cylinder.pressure} + ' bar'"></span>
+        </div>
+        <div class="row">
+            <span class="label">Weight:</span>
+            <span th:text="${cylinder.weight} + ' kg'"></span>
+        </div>
+        <div class="row">
+            <span class="label">Temperature:</span>
+            <span th:text="${cylinder.temperature} + ' °C'"></span>
+        </div>
+        <div class="row">
+            <span class="label">Valve Condition:</span>
+            <span th:text="${cylinder.valveCondition}"></span>
+        </div>
+        <div class="row">
+            <span class="label">Status:</span>
+            <span th:text="${cylinder.status}"></span>
+        </div>
+        <div class="row">
+            <span class="label">Defect Status:</span>
+            <span th:text="${cylinder.defectStatus}"
+                  th:class="${cylinder.defectStatus == 'DEFECTIVE'} ? 
+                  'defective' : 'nodefect'">
+            </span>
+        </div>
+
+        <a href="/" class="btn">← Back to Home</a>
+    </div>
+</body>
+</html>

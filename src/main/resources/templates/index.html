@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Oxygen Cylinder Defect Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #f0f4f8; }
+        .navbar { background: linear-gradient(135deg, #003366, #0055aa); }
+        .navbar-brand, .nav-link { color: white !important; }
+        .card { border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .table thead { background: #003366; color: white; }
+        .badge-defective { background: #dc3545; color: white;
+                           padding: 5px 10px; border-radius: 20px; font-size: 13px; }
+        .badge-nodefect { background: #28a745; color: white;
+                          padding: 5px 10px; border-radius: 20px; font-size: 13px; }
+        .stat-card { border-radius: 10px; color: white; padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+            <i class="fas fa-hospital me-2"></i>Oxygen Cylinder Defect Detection
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-2">
+    <span class="text-white me-2">
+        <i class="fas fa-user me-1"></i>
+        <span th:text="${loggedUser.fullName}">User</span>
+    </span>
+    <a href="/add" class="btn btn-light me-2">
+    <i class="fas fa-plus me-1"></i>Add Cylinder
+</a>
+<a href="/upload" class="btn btn-outline-light me-2">
+    <i class="fas fa-upload me-1"></i>Upload CSV
+</a>
+<a href="/dashboard" class="btn btn-outline-light me-2">
+    <i class="fas fa-chart-pie me-1"></i>Dashboard
+</a>
+    <a href="/logout" class="btn btn-outline-light">
+        <i class="fas fa-sign-out-alt me-1"></i>Logout
+    </a>
+</div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- Stats Row -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stat-card" style="background: linear-gradient(135deg, #003366, #0055aa);">
+                <i class="fas fa-flask fa-2x mb-2"></i>
+                <h3 th:text="${totalCount}">0</h3>
+                <p>Total Cylinders</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <h3 th:text="${noDefectCount}">0</h3>
+                <p>No Defect</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card" style="background: linear-gradient(135deg, #dc3545, #ff6b6b);">
+                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                <h3 th:text="${defectiveCount}">0</h3>
+                <p>Defective</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Cylinder Records</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cylinder No</th>
+                        <th>Pressure</th>
+                        <th>Weight</th>
+                        <th>Temperature</th>
+                        <th>Valve</th>
+                        <th>Defect Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cylinder : ${cylinders}">
+                        <td th:text="${cylinder.id}"></td>
+                        <td th:text="${cylinder.cylinderNo}"></td>
+                        <td th:text="${cylinder.pressure} + ' bar'"></td>
+                        <td th:text="${cylinder.weight} + ' kg'"></td>
+                        <td th:text="${cylinder.temperature} + ' °C'"></td>
+                        <td th:text="${cylinder.valveCondition}"></td>
+                        <td>
+                            <span th:if="${cylinder.defectStatus == 'DEFECTIVE'}"
+                                  class="badge-defective">❌ DEFECTIVE</span>
+                            <span th:if="${cylinder.defectStatus == 'NO DEFECT'}"
+                                  class="badge-nodefect">✅ NO DEFECT</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/view/{id}(id=${cylinder.id})}"
+                               class="btn btn-sm btn-primary me-1">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a th:href="@{/delete/{id}(id=${cylinder.id})}"
+                               onclick="return confirm('Are you sure?')"
+                               class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

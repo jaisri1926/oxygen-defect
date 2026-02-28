@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Cylinder</title>
+    <style>
+        body { font-family: Arial; background: #f0f8ff; margin: 0; padding: 20px; }
+        h1 { color: #003366; text-align: center; }
+        .form-container { background: white; padding: 30px; 
+                          border-radius: 10px; max-width: 500px; 
+                          margin: 20px auto; box-shadow: 0 0 10px #ccc; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; 
+                        border: 1px solid #ccc; border-radius: 5px; }
+        .btn { width: 100%; padding: 10px; background: #003366; 
+               color: white; border: none; border-radius: 5px; 
+               margin-top: 20px; cursor: pointer; font-size: 16px; }
+        .btn:hover { background: #0055aa; }
+        .back { display: block; text-align: center; 
+                margin-top: 10px; color: #003366; }
+    </style>
+</head>
+<body>
+    <h1>🏥 Add New Oxygen Cylinder</h1>
+    <div class="form-container">
+        <form th:action="@{/save}" th:object="${cylinder}" method="post">
+
+            <label>Cylinder Number:</label>
+            <input type="text" th:field="*{cylinderNo}" 
+                   placeholder="e.g. CYL-001" required/>
+
+            <label>Pressure (bar):</label>
+            <input type="number" th:field="*{pressure}" 
+                   placeholder="e.g. 150" step="0.1" required/>
+
+            <label>Weight (kg):</label>
+            <input type="number" th:field="*{weight}" 
+                   placeholder="e.g. 50" step="0.1" required/>
+
+            <label>Temperature (°C):</label>
+            <input type="number" th:field="*{temperature}" 
+                   placeholder="e.g. 25" step="0.1" required/>
+
+            <label>Valve Condition:</label>
+            <select th:field="*{valveCondition}">
+                <option value="good">Good</option>
+                <option value="bad">Bad</option>
+                <option value="damaged">Damaged</option>
+            </select>
+
+            <label>Status:</label>
+            <select th:field="*{status}">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+
+            <button type="submit" class="btn">🔍 Check & Save Cylinder</button>
+        </form>
+        <a href="/" class="back">← Back to Home</a>
+    </div>
+</body>
+</html>

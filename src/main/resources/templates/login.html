@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #003366, #0055aa);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 400px;
+        }
+        .login-header {
+            background: linear-gradient(135deg, #003366, #0055aa);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 30px;
+            text-align: center;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #003366, #0055aa);
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .btn-login:hover { background: #0055aa; color: white; }
+        .form-control:focus {
+            border-color: #0055aa;
+            box-shadow: 0 0 0 0.2rem rgba(0,85,170,0.25);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card card">
+    <div class="login-header">
+        <i class="fas fa-hospital fa-3x mb-3"></i>
+        <h4>Oxygen Cylinder</h4>
+        <p class="mb-0">Defect Detection System</p>
+    </div>
+    <div class="card-body p-4">
+        <h5 class="text-center mb-4 text-primary">
+            <i class="fas fa-sign-in-alt me-2"></i>Login
+        </h5>
+
+        <!-- Error Message -->
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <form method="post" th:action="@{/login}">
+            <div class="mb-3">
+                <label class="form-label fw-bold">
+                    <i class="fas fa-user me-1"></i>Username
+                </label>
+                <input type="text" name="username" class="form-control"
+                       placeholder="Enter username" required/>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-bold">
+                    <i class="fas fa-lock me-1"></i>Password
+                </label>
+                <input type="password" name="password" class="form-control"
+                       placeholder="Enter password" required/>
+            </div>
+            <button type="submit" class="btn btn-login">
+                <i class="fas fa-sign-in-alt me-2"></i>Login
+            </button>
+        </form>
+
+        <div class="text-center mt-3">
+            <p>Don't have an account?
+                <a href="/register" class="text-primary fw-bold">Register here</a>
+            </p>
+        </div>
+
+        <!-- Default credentials hint -->
+        <div class="alert alert-info mt-3 text-center">
+            <small>
+                <i class="fas fa-info-circle me-1"></i>
+                Default: username = <b>admin</b> | password = <b>admin123</b>
+            </small>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
